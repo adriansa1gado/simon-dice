@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	background: #dedede;
@@ -12,10 +16,27 @@ body {
 	border-radius: 50%;
 	overflow: hidden;
 	margin: 0 auto;
-	max-height: 60vh;
-	max-width: 60vh;
 	display: flex;
 	flex-wrap: wrap;
+	max-height: 60vh;
+	max-width: 60vh;
+	border: 1rem solid black;
+}
+
+.top {
+	border-top: 0.5rem solid black;
+}
+
+.bottom {
+	border-bottom: 0.5rem solid black;
+}
+
+.right {
+	border-right: 0.5rem solid black;
+}
+
+.left {
+	border-left: 0.5rem solid black;
 }
 
 .color {
@@ -24,47 +45,51 @@ body {
 	display: inline-block;
 }
 
-.celeste {
-	background: #22a6b3;
+.blue {
+	background: #2171fc;
 }
 
-.celeste.light {
-	background: #7ed6df;
+.blue.light {
+	background: #1ba2fc;
 }
 
-.violeta {
-	background: #be2edd;
+.red {
+	background: #ff1a39;
 }
 
-.violeta.light {
-	background: #e056fd;
+.red.light {
+	background: #ff0026;
 }
 
-.naranja {
-	background: #f0932b;
+.yellow {
+	background: #fccf21;
 }
 
-.naranja.light {
-	background: #ffbe76;
+.yellow.light {
+	background: #fcd821;
 }
 
-.verde {
-	background: #6ab04c;
+.green {
+	background: #47cf21;
 }
 
-.verde.light {
-	background: #badc58;
+.green.light {
+	background: #28e421;
 }
 
 .btn-start {
-	width: 400px;
-	height: 100px;
-	background: #ecf0f1;
-	color: #2c3e50;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background: black;
+	color: white;
 	font-size: 2.5rem;
+	cursor: pointer;
+	border: none;
+	outline: none;
 	position: absolute;
-	top: calc(50% - 50px);
-	left: calc(50% - 200px);
+	top: calc(50% - 75px);
+	left: calc(50% - 75px);
 }
 
 .hide {
