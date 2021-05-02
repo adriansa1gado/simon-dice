@@ -3,12 +3,15 @@ class Juego {
 	constructor() {
 		this.inicializar();
 		this.generarSecuencia();
-		this.siguienteNivel();
+		setTimeout(this.siguienteNivel, 500);
 	}
 
 	inicializar() {
-		this.nivel = 10;
-		btnEmpezar.textContent = this.nivel;
+		//definir el contexto
+		this.siguienteNivel = this.siguienteNivel.bind(this);
+		this.elegirColor = this.elegirColor.bind(this);
+		this.nivel = 1;
+		this.mostrarNivel();
 		this.enabled(btnEmpezar);
 		this.colores = {
 			yellow,
@@ -20,14 +23,16 @@ class Juego {
 
 	generarSecuencia() {
 		//map no funciona con elementos indefinidos dentro de un array
-		this.secuencia = new Array(10)
+		this.secuencia = new Array(ULTIMO_NIVEL)
 			.fill(0)
 			.map(() => Math.floor(Math.random() * 4));
 		console.log(this.secuencia);
 	}
 
 	siguienteNivel() {
+		this.subnivel = 0;
 		this.iluminarSecuencia();
+		this.agregarEventosClick();
 	}
 
 	transformarNumeroaColor(num) {
@@ -43,9 +48,22 @@ class Juego {
 		}
 	}
 
+	transformarColoraNumero(color) {
+		switch (color) {
+			case 'yellow':
+				return 0;
+			case 'green':
+				return 1;
+			case 'red':
+				return 2;
+			case 'blue':
+				return 3;
+		}
+	}
+
 	iluminarSecuencia() {
 		for (let i = 0; i < this.nivel; i++) {
-			let color = this.transformarNumeroaColor(this.secuencia[i]);
+			const color = this.transformarNumeroaColor(this.secuencia[i]);
 			setTimeout(() => this.iluminarColor(color), 1000 * i);
 		}
 	}
@@ -57,6 +75,50 @@ class Juego {
 
 	apagarColor(color) {
 		this.colores[color].classList.remove('light');
+	}
+
+	agregarEventosClick() {
+		//bind: atar o enlazar, atar el metodo al this
+		this.colores.yellow.addEventListener('click', this.elegirColor);
+		this.colores.green.addEventListener('click', this.elegirColor);
+		this.colores.red.addEventListener('click', this.elegirColor);
+		this.colores.blue.addEventListener('click', this.elegirColor);
+	}
+
+	eliminarEventosClick() {
+		this.colores.yellow.removeEventListener('click', this.elegirColor);
+		this.colores.green.removeEventListener('click', this.elegirColor);
+		this.colores.red.removeEventListener('click', this.elegirColor);
+		this.colores.blue.removeEventListener('click', this.elegirColor);
+	}
+
+	elegirColor(ev) {
+		//un evento es una operacion asincrona que delega el navegador
+		/*por eso el this cambia de contexto y se refiere al elemento html 
+		que lo activo*/
+		const nombreColor = ev.target.dataset.color;
+		const numeroColor = this.transformarColoraNumero(nombreColor);
+		this.iluminarColor(nombreColor);
+
+		if (numeroColor === this.secuencia[this.subnivel]) {
+			this.subnivel++;
+			if (this.subnivel === this.nivel) {
+				this.nivel++;
+				this.eliminarEventosClick();
+				if (this.nivel === ULTIMO_NIVEL + 1) {
+					//ganaste
+				} else {
+					setTimeout(this.mostrarNivel.bind(this), 500);
+					setTimeout(this.siguienteNivel, 1000);
+				}
+			}
+		} else {
+			//perdiste
+		}
+	}
+
+	mostrarNivel() {
+		btnEmpezar.textContent = this.nivel;
 	}
 
 	enabled(boton) {
