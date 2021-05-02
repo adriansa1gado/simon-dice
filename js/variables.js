@@ -4,4 +4,4 @@ const red = document.getElementById('red');
 const blue = document.getElementById('blue');
 const btnEmpezar = document.getElementById('btnEmpezar');
 
-const ULTIMO_NIVEL = 10;
+const ULTIMO_NIVEL = 1;

@@ -1,6 +1,7 @@
 class Juego {
 	//llamar los metodos al instanciar la clase
 	constructor() {
+		this.inicializar = this.inicializar.bind(this);
 		this.inicializar();
 		this.generarSecuencia();
 		setTimeout(this.siguienteNivel, 500);
@@ -12,7 +13,7 @@ class Juego {
 		this.elegirColor = this.elegirColor.bind(this);
 		this.nivel = 1;
 		this.mostrarNivel();
-		this.enabled(btnEmpezar);
+		this.toggleEnabled();
 		this.colores = {
 			yellow,
 			green,
@@ -26,7 +27,6 @@ class Juego {
 		this.secuencia = new Array(ULTIMO_NIVEL)
 			.fill(0)
 			.map(() => Math.floor(Math.random() * 4));
-		console.log(this.secuencia);
 	}
 
 	siguienteNivel() {
@@ -106,22 +106,38 @@ class Juego {
 				this.nivel++;
 				this.eliminarEventosClick();
 				if (this.nivel === ULTIMO_NIVEL + 1) {
-					//ganaste
+					this.ganoElJuego();
 				} else {
 					setTimeout(this.mostrarNivel.bind(this), 500);
 					setTimeout(this.siguienteNivel, 1000);
 				}
 			}
 		} else {
-			//perdiste
+			this.perdioElJuego();
 		}
+	}
+
+	ganoElJuego() {
+		swal('✨🎉Felicidades🎉✨', 'Has ganado', 'success').then(this.inicializar);
+	}
+
+	perdioElJuego() {
+		swal('😧😧😧😧', 'Has perdido', 'error').then(() => {
+			this.eliminarEventosClick;
+			this.inicializar;
+		});
 	}
 
 	mostrarNivel() {
 		btnEmpezar.textContent = this.nivel;
 	}
 
-	enabled(boton) {
-		boton.disabled = true;
+	toggleEnabled() {
+		if ((btnEmpezar.disabled = false)) {
+			btnEmpezar.disabled = true;
+		} else {
+			btnEmpezar.disabled = false;
+			btnEmpezar.textContent = 0;
+		}
 	}
 }
