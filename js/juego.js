@@ -29,9 +29,9 @@ class Juego {
 			.map(() => Math.floor(Math.random() * 4));
 	}
 
-	siguienteNivel() {
+	async siguienteNivel() {
 		this.subnivel = 0;
-		this.iluminarSecuencia();
+		await this.iluminarSecuencia();
 		this.agregarEventosClick();
 	}
 
@@ -62,12 +62,18 @@ class Juego {
 	}
 
 	iluminarSecuencia() {
-		for (let i = 0; i < this.nivel; i++) {
-			const color = this.transformarNumeroaColor(this.secuencia[i]);
-			setTimeout(() => {
-				this.iluminarColor(color);
-			}, 1000 * i);
-		}
+		return new Promise((resolve) => {
+			for (let i = 0; i < this.nivel; i++) {
+				const color = this.transformarNumeroaColor(this.secuencia[i]);
+				setTimeout(() => {
+					this.iluminarColor(color);
+
+					if (i === this.nivel - 1) {
+						resolve(true);
+					}
+				}, 1000 * i);
+			}
+		});
 	}
 
 	iluminarColor(color) {
