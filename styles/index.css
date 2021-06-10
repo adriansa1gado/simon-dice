@@ -93,6 +93,11 @@ body {
 	left: calc(50% - 75px);
 }
 
+.btn-start-enabled {
+	color: rgb(255, 230, 0);
+	cursor: auto;
+}
+
 .hide {
 	display: none;
 }

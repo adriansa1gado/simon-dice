@@ -12,7 +12,7 @@ class Juego {
 		this.siguienteNivel = this.siguienteNivel.bind(this);
 		this.elegirColor = this.elegirColor.bind(this);
 		this.nivel = 1;
-		// this.toggleEnabled();
+		this.toggleEnabled();
 		this.mostrarNivel();
 		this.colores = {
 			yellow,
@@ -120,15 +120,17 @@ class Juego {
 	}
 
 	ganoElJuego() {
-		swal('✨🎉Felicidades🎉✨', 'Has ganado', 'success').then(
-			this.mostrarNivel(0)
-		);
+		swal('✨🎉Felicidades🎉✨', 'Has ganado', 'success').then(() => {
+			this.mostrarNivel(0);
+			this.toggleEnabled();
+		});
 	}
 
 	perdioElJuego() {
 		swal('😧😧😧😧', 'Has perdido', 'error').then(() => {
-			this.eliminarEventosClick;
+			this.eliminarEventosClick();
 			this.mostrarNivel(0);
+			this.toggleEnabled();
 		});
 	}
 
@@ -138,11 +140,7 @@ class Juego {
 	}
 
 	toggleEnabled() {
-		if ((btnEmpezar.disabled = false)) {
-			btnEmpezar.disabled = true;
-		} else {
-			btnEmpezar.disabled = false;
-			btnEmpezar.textContent = 0;
-		}
+		btnEmpezar.disabled = !btnEmpezar.disabled;
+		btnEmpezar.classList.toggle('btn-start-enabled');
 	}
 }
