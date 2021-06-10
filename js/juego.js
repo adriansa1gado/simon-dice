@@ -12,8 +12,8 @@ class Juego {
 		this.siguienteNivel = this.siguienteNivel.bind(this);
 		this.elegirColor = this.elegirColor.bind(this);
 		this.nivel = 1;
+		// this.toggleEnabled();
 		this.mostrarNivel();
-		this.toggleEnabled();
 		this.colores = {
 			yellow,
 			green,
@@ -64,7 +64,9 @@ class Juego {
 	iluminarSecuencia() {
 		for (let i = 0; i < this.nivel; i++) {
 			const color = this.transformarNumeroaColor(this.secuencia[i]);
-			setTimeout(() => this.iluminarColor(color), 1000 * i);
+			setTimeout(() => {
+				this.iluminarColor(color);
+			}, 1000 * i);
 		}
 	}
 
@@ -118,18 +120,21 @@ class Juego {
 	}
 
 	ganoElJuego() {
-		swal('✨🎉Felicidades🎉✨', 'Has ganado', 'success').then(this.inicializar);
+		swal('✨🎉Felicidades🎉✨', 'Has ganado', 'success').then(
+			this.mostrarNivel(0)
+		);
 	}
 
 	perdioElJuego() {
 		swal('😧😧😧😧', 'Has perdido', 'error').then(() => {
 			this.eliminarEventosClick;
-			this.inicializar;
+			this.mostrarNivel(0);
 		});
 	}
 
-	mostrarNivel() {
-		btnEmpezar.textContent = this.nivel;
+	mostrarNivel(nivel) {
+		nivel = nivel != undefined ? nivel : this.nivel;
+		btnEmpezar.textContent = nivel;
 	}
 
 	toggleEnabled() {
